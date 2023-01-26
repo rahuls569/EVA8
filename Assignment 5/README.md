@@ -472,7 +472,17 @@ Test set: Average loss: 0.0224, Accuracy: 9928/10000 (99.28%)
 
 ![image](https://user-images.githubusercontent.com/79099957/214843182-ee939443-d4e7-40b3-85b7-c122929d6b1d.png)
 
+Using LN
 
+![image](https://user-images.githubusercontent.com/79099957/214853344-ace8d31b-db0d-4323-b910-979d80ce9173.png)
+
+USing GN
+
+![image](https://user-images.githubusercontent.com/79099957/214856173-d075ce7d-78a7-4f2d-952b-276f0d825395.png)
+
+Using BN+L1
+
+![image](https://user-images.githubusercontent.com/79099957/214858858-210ffae8-d81c-4384-a3eb-7e7d46effa39.png)
 
 
 
