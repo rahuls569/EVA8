@@ -2,7 +2,8 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
-def setup_dataloaders(trainset, testset, SEED, Batch):
+def setup_dataloaders(trainset, testset, SEED):
+    Batch=128
     cuda = torch.cuda.is_available()
     torch.manual_seed(SEED)
     if cuda:
