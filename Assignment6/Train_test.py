@@ -32,7 +32,7 @@ def train(model, device, train_loader, optimizer, criterion, epoch):
     #     l1=l1+p.abs().sum()
     #     loss= loss+ lamda_l1* l1         
 
-    # Backpropagation
+    # Backpropagation 
     loss.backward()
     optimizer.step()
 
