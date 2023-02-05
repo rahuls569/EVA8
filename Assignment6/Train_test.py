@@ -1,5 +1,7 @@
 from tqdm import tqdm
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
 train_losses = []
 test_losses = []
