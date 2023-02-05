@@ -49,7 +49,8 @@ def test(model, device, test_loader, criterion):
     model.eval()
     test_loss = 0
     correct = 0
-    misclassified_images = []
+  
+    
     with torch.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
@@ -57,11 +58,7 @@ def test(model, device, test_loader, criterion):
             test_loss += criterion(output, target).item()  # sum up batch loss
             pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
             
-                        # compare predictions with true label
-            for i, (p, t) in enumerate(zip(pred, target)):
-                if p != t:
-                    misclassified_images.append((data[i], p, t))
-            
+              
             
             correct += pred.eq(target.view_as(pred)).sum().item()
 
@@ -73,4 +70,4 @@ def test(model, device, test_loader, criterion):
         100. * correct / len(test_loader.dataset)))
     
     test_acc.append(100. * correct / len(test_loader.dataset))
-    return misclassified_images
+   
