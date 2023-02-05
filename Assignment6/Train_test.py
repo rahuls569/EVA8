@@ -71,5 +71,5 @@ def test(model, device, test_loader, criterion, torch):
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
     
-    test_acc.append(100. * correct / len(test_loader.dataset))
+    test_acc.append(100. * correct / len(test_loader.dataset)) 
    
