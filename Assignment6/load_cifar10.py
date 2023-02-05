@@ -13,15 +13,13 @@ def load_cifar10(root, augmentations=None):
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
     
-    trainset = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=augmentations)
+    trainset = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=transform)
     
     if augmentations is not None:
         transform = A.Compose(augmentations + [transform])
         
-    testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=augmentations)
+    testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=transform)
     
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
     
     return trainset, testset, classes
- 
-
