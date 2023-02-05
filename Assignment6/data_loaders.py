@@ -14,4 +14,4 @@ def setup_dataloaders(trainset, testset, SEED):
     train_loader = torch.utils.data.DataLoader(trainset, **dataloader_args)
     test_loader = torch.utils.data.DataLoader(testset, **dataloader_args)
     
-    return train_loader, test_loader
+    return train_loader, test_loader 
