@@ -2,13 +2,13 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
-def setup_dataloaders(trainset, testset, SEED):
+def setup_dataloaders(trainset, testset, SEED, Batch_size):
     cuda = torch.cuda.is_available()
     torch.manual_seed(SEED)
     if cuda:
         torch.cuda.manual_seed(SEED)
     
-    dataloader_args = dict(shuffle=False, batch_size=128, num_workers=2, pin_memory=True) if cuda else dict(shuffle=True, batch_size=64)
+    dataloader_args = dict(shuffle=False, batch_size=Batch_size, num_workers=2, pin_memory=True) if cuda else dict(shuffle=True, batch_size=Batch_size)
     
     train_loader = torch.utils.data.DataLoader(trainset, **dataloader_args)
     test_loader = torch.utils.data.DataLoader(testset, **dataloader_args)
