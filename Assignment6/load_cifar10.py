@@ -4,7 +4,7 @@ import torchvision
 import torchvision.transforms as transforms
 import cv2 
 
-augmentations = [A.HorizontalFlip(), A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.1, rotate_limit=15),
+augmentations = [A.HorizontalFlip(), A.ShiftScaleRotate(),
                  A.CoarseDropout(max_holes=1, max_height=16, max_width=16, min_holes=1, min_height=16,
                                  min_width=16, fill_value=(0.5, 0.5, 0.5), mask_fill_value=None)]
 
@@ -27,8 +27,8 @@ test_transforms = transforms.Compose([
 trainset = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=train_transforms)
 
 if augmentations is not None:
-    def augment(image):
-        image = transforms.ToPILImage()(image)
+    #def augment(image):
+     #   image = transforms.ToPILImage()(image)
         for aug in augmentations:
             image = aug(image=image)["image"]
         return transform(image)
