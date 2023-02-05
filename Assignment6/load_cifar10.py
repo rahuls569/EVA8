@@ -16,7 +16,12 @@ def load_cifar10(root, augmentations=None):
     trainset = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=transform)
     
     if augmentations is not None:
-        transform = A.Compose(augmentations + [transform])
+        def augment(image):
+            image = transforms.ToPILImage()(image)
+            for aug in augmentations:
+                image = aug(image=image)["image"]
+            return transform(image)
+        transform = augment
         
     testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=transform)
     
