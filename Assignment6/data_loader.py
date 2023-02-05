@@ -3,6 +3,10 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
+augmentations = [A.HorizontalFlip(), A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.1, rotate_limit=15),
+                 A.CoarseDropout(max_holes=1, max_height=16, max_width=16, min_holes=1, min_height=16,
+                                 min_width=16, fill_value=(0.5, 0.5, 0.5), mask_fill_value=None)]
+
 def load_cifar10(root, augmentations=None):
     transform = transforms.Compose([
         transforms.ToTensor(),
