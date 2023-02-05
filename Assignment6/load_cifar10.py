@@ -19,7 +19,7 @@ def load_cifar10(root, augmentations=None):
         def augment(image):
             image = transforms.ToPILImage()(image)
             for aug in augmentations:
-                image = aug(image=image)["image"]
+                image = aug(image)["image"]
             return transform(image)
         transform = augment
         
