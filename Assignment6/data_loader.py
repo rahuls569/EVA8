@@ -6,7 +6,7 @@ import torchvision
 from torchvision import datasets, transforms
 
 
-def transform1:
+def transform1():
   transform = transforms.Compose(
       [transforms.ToTensor(),
        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
