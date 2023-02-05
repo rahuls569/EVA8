@@ -30,7 +30,7 @@ if augmentations is not None:
     #def augment(image):
      #   image = transforms.ToPILImage()(image)
         for aug in augmentations:
-            image = aug(image=image)["image"]
+            image = aug(image=image)['image']
         return transform(image)
     trainset.transform = augment
     
