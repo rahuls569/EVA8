@@ -32,7 +32,7 @@ if augmentations is not None:
         for aug in augmentations:
             image = aug(image=image)["image"]
         return transform(image)
-    trainset_transform = augment
+    trainset.transform = augment
     
 testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=test_transforms)
 
