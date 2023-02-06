@@ -104,29 +104,24 @@ class Net(nn.Module):
 
 
     def forward(self, x):
-        x1 = self.convblock1(x)
-
-        x2 = self.convblock2(x1)
-        x3 = x2 + x1
-
-        x4 = self.convblock3(x3)
-
-        x5 = self.convblock4(x4)
-        x6 = x5 + x4
-
-        x7 = self.convblock6(x6)
-
-        x8 = self.convblock7(x7)
-        x9 = x8 + self.shortcut1(x7)
-
-        x10 = self.convblock8(x9)
-
-        x11 = self.convblock9(x10)
-        x12 = x11 + self.shortcut2(x10)
-
-
-        out = self.gap(x12)        
-        out = out.view(out.size(0), -1)
-        out = self.linear(out)
-
-        return out
+        x = self.convblock1(x)
+        x = self.convblock2(x)
+        x = self.convblock3(x)
+        x = self.convblock4(x)
+        x = self.convblock6(x)
+        x = self.convblock7(x)
+        sc1 = self.shortcut1(x)
+        x = self.convblock8(sc1)
+        x = self.convblock9(x)
+        x = self.convblock10(x)
+        sc2 = self.shortcut2(x)
+        x = self.convblock11(sc2)
+        x = self.convblock12(x)
+        sc3 = self.shortcut3(x)
+        x = self.convblock13(sc3)
+        x = self.convblock14(x)
+        x = self.avgpool(x)
+        x = x.view(-1, 64*6*6)
+        x = self.fc(x)
+        
+        return x
