@@ -9,7 +9,6 @@ augmentations = [A.HorizontalFlip(), A.ShiftScaleRotate(),
                                  min_width=16, fill_value=(0.5, 0.5, 0.5), mask_fill_value=None)]
 
 def load_cifar10(root, augmentations=None):
-   
   train_transforms = transforms.Compose([
                                     #  transforms.Resize((28, 28)),
                                    #  transforms.ColorJitter(brightness=0.10, contrast=0.1, saturation=0.10, hue=0.1),
@@ -31,8 +30,8 @@ def load_cifar10(root, augmentations=None):
           image = transforms.ToPILImage()(image)
           for aug in augmentations:
               image = aug(image=image)["image"]
-          return transform(image)
-     trainset.transform = augment
+       return transform(image)
+    trainset.transform = augment
     
   testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=test_transforms)
 
