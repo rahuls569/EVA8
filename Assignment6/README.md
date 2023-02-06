@@ -188,7 +188,7 @@ Test set: Average loss: 0.0108, Accuracy: 5017/10000 (50.17%)
 EPOCH: 24
 Loss=1.2190752029418945 Batch_id=390 Accuracy=50.77: 100%|██████████| 391/391 [00:13<00:00, 28.42it/s]
 
-Test set: Average loss: 0.0107, Accuracy: 5020/10000 (50.20%)
+Test set: Average loss: 0.0107, Accuracy: 5020/10000 (50.20%) 
 
 
 
