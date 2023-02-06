@@ -1,127 +1,25 @@
-import torch.nn.functional as F
 import torch.nn as nn
+import torch.nn.functional as F
+
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
 
-        # Input Block
-        self.convblock1 = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, stride=1, padding=1),
-            nn.ReLU(),
-            nn.BatchNorm2d(32),
-        ) 
-
-        # CONVOLUTION BLOCK 1
-        self.convblock2 = nn.Sequential(
-            nn.Conv2d(in_channels=32, out_channels=128, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(128),
-            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, stride=1, padding=1, groups=64),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-            
-        ) 
-
-        # TRANSITION BLOCK 1
-        self.convblock3 = nn.Sequential(
-            nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(32),
-        ) 
-
-        # CONVOLUTION BLOCK 2
-        self.convblock4 = nn.Sequential(
-            nn.Conv2d(in_channels=32, out_channels=128, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(128),
-            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, stride=1, padding=1, groups=64),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-           
-        ) 
-
-        # TRANSITION BLOCK 2
-        self.convblock6 = nn.Sequential(
-            nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(32),
-        ) 
-            
-        # CONVOLUTION BLOCK 3       
-        self.convblock7 = nn.Sequential(
-            nn.Conv2d(in_channels=32, out_channels=128, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(128),
-            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, stride=1, padding=1, groups=64),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(64),
-            
-        ) 
-
-        self.shortcut1 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=1, stride=1, padding=0),
-            nn.BatchNorm2d(128),
-        )
-
-        # TRANSITION BLOCK 3
-        self.convblock8 = nn.Sequential(
-            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, dilation=2, padding=0),
-            nn.BatchNorm2d(64),
-        ) 
+        self.conv1 = nn.Conv2d(3, 16, 3, stride=2, padding=1)        # input 32X32X3 || 3X3X3X16 || 16X16X16       RF= 1+(3-1)*2=5                           #output_size = (input_size - kernel_size + 2 * padding) / stride + 1
+        self.conv2 = nn.Conv2d(16, 32, 3, stride=2, padding=1)       #  16X16X16 ||  3X3X16X32  || 8X8X32          RF= 5+(3-1)*4=13
+        self.depthwise = nn.Conv2d(32, 32, kernel_size=3, stride=2, padding=1, groups=32)   #8X8X32 || 3X3X32X32 || 4X4X32       RF= 13+(3-1)*8=29   
+        self.pointwise = nn.Conv2d(32, 64, kernel_size=1)            # 4X4X32 || 1X1X32X64 || 4X4X64                     RF= 29
+        self.conv3 = nn.Conv2d(64, 128, 3, dilation=2, padding=2)    # 4X4X64 ||                                           RF= 29+(3-1)*16=29+32=61
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.fc = nn.Linear(128, 10)
         
-        # CONVOLUTION BLOCK 4       
-        self.convblock9 = nn.Sequential(
-            nn.Conv2d(in_channels=64, out_channels=6*64, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(6*64),
-            nn.Conv2d(in_channels=6*64, out_channels=6*64, kernel_size=3, stride=1, padding=1, groups=6*64),
-            nn.ReLU(),
-            nn.BatchNorm2d(6*64),
-            nn.Conv2d(in_channels=6*64, out_channels=132, kernel_size=1, stride=1, padding=0),
-            nn.ReLU(),
-            nn.BatchNorm2d(132),
-           
-        ) 
-
-        self.shortcut2 = nn.Sequential(
-            nn.Conv2d(64, 132, kernel_size=1, stride=1, padding=0),
-            nn.BatchNorm2d(132),
-        )
-
-        # OUTPUT BLOCK
-        self.gap = nn.Sequential(
-            nn.AvgPool2d(kernel_size=4)
-        ) #o/p size = 512*1*1 RF = 92
-
-        self.linear = nn.Linear(132, 10)
-
-
     def forward(self, x):
-        x = self.convblock1(x)
-        x = self.convblock2(x)
-        x = self.convblock3(x)
-        x = self.convblock4(x)
-        x = self.convblock6(x)
-        x = self.convblock7(x)
-        sc1 = self.shortcut1(x)
-        x = self.convblock8(sc1)
-        x = self.convblock9(x)
-        x = self.convblock10(x)
-        sc2 = self.shortcut2(x)
-        x = self.convblock11(sc2)
-        x = self.convblock12(x)
-        sc3 = self.shortcut3(x)
-        x = self.convblock13(sc3)
-        x = self.convblock14(x)
-        x = self.avgpool(x)
-        x = x.view(-1, 64*6*6)
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        x = F.relu(self.depthwise(x))
+        x = F.relu(self.pointwise(x))
+        x = F.relu(self.conv3(x))
+        x = self.avg_pool(x)
+        x = x.view(-1, 128)
         x = self.fc(x)
-        
         return x
