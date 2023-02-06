@@ -30,8 +30,9 @@ def load_cifar10(root, augmentations=None):
           image = transforms.ToPILImage()(image)
           for aug in augmentations:
               image = aug(image=image)["image"]
-       return transform(image)
-    trainset.transform = augment
+          image = transforms.ToTensor()(image)
+          return image
+      trainset.Transform = augment
     
   testset = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=test_transforms)
 
