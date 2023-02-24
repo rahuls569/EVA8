@@ -1,3 +1,5 @@
+Assignment:
+
 1. Write a custom ResNet architecture for CIFAR10 that has the following architecture:
     1. PrepLayer - Conv 3x3 s1, p1) >> BN >> RELU [64k]
     2. Layer1 -
@@ -27,4 +29,6 @@
 5. Target Accuracy: 90% (93.8% quadruple scores). 
 6. NO score if your code is not modular. Your collab must be importing your GitHub package, and then just running the model. I should be able to find the custom_resnet.py model in your GitHub repo that you'd be training. 
 7.Once done, proceed to answer the Assignment-Solution page. 
+ 
+ 
  
