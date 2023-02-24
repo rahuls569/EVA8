@@ -174,12 +174,16 @@ Code used for image augmentation of your images:
 
 Train_loader images:
 
-![image](https://user-images.githubusercontent.com/79099957/221221058-47beb6d0-ff3d-459a-96cd-93bd807e31af.png)
+![image](https://user-images.githubusercontent.com/79099957/221221814-23895163-437c-4bc8-813e-a3fc01367abe.png)
 
+LR for One Cycle Learning Rate
 
+![image](https://user-images.githubusercontent.com/79099957/221221670-fecc757a-fac9-4e0e-add9-c41191205f6d.png)
+
+Max LR is 0.13987131026472382
 
 GRAPH LOSS and ACCURACY:
-![image](https://user-images.githubusercontent.com/79099957/221220919-6d59f269-3995-4e3d-a2a7-e73e943efe22.png)
+![image](https://user-images.githubusercontent.com/79099957/221221544-d863b03d-0370-49bf-a52e-88d4eeb4e753.png)
 
 
 
